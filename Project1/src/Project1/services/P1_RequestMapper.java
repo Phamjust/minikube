@@ -1,0 +1,119 @@
+package Project1.services;
+
+
+
+
+
+import Project1.users.User;
+import io.javalin.Javalin;
+import io.javalin.http.HttpCode;
+
+public class P1_RequestMapper {
+	private P1_Controller P1_Controller = new P1_Controller();//reference to the next layer
+	private User u = new User();
+	private P1_AuthenticationController P1_AuthenticationController = new P1_AuthenticationController();
+	
+	public void configureRoutes(Javalin app) {
+
+		// This will be for employee to view all their approved requests
+		app.get("/Request/approved", ctx -> {
+			P1_Controller.getAllRequestsApprovedByEmployee(ctx);
+		});
+
+		// This will be for employee to view all their pending requests
+		app.get("/Request/pending", ctx -> {
+			if(P1_AuthenticationController.verifyEmployee(ctx)) {
+				P1_Controller.getAllRequestsPendingByEmployee(ctx);
+			} else {
+				ctx.status(HttpCode.FORBIDDEN);
+			}
+			
+		});
+
+		// This will be for employee to view all their requests
+		app.get("/Requests", ctx -> {
+			if(P1_AuthenticationController.verifyEmployee(ctx)) {
+				P1_Controller.getAllRequestsByEmployee(ctx);
+			}else {
+				ctx.status(HttpCode.FORBIDDEN);
+			}
+			
+			
+		});
+
+		// This will be for managers to view everyones requests
+		app.get("/Manager/Requests", ctx -> {//Done
+			if(P1_AuthenticationController.verifyEmployee(ctx)) {
+				P1_Controller.getAllRequests(ctx);
+			}else {
+				ctx.status(HttpCode.FORBIDDEN);
+			}
+			
+		});
+
+		// This will be for managers to view everyones pending requests
+		app.get("/Manager/Requests/Pending", ctx -> {//Done
+			if(P1_AuthenticationController.verifyEmployee(ctx)) {
+				P1_Controller.getAllRequestsPending(ctx);
+			}else {
+				ctx.status(HttpCode.FORBIDDEN);
+			}
+			
+		});
+
+		// This will be for managers to view everyones approved requests
+		app.get("/Manager/Requests/Approved", ctx -> {//Done
+			if(P1_AuthenticationController.verifyEmployee(ctx)) {
+				P1_Controller.getAllRequestsApproved(ctx);
+			}else {
+				ctx.status(HttpCode.FORBIDDEN);
+			}
+		
+		});
+
+		app.post("/CreateRequest", ctx -> {
+			// Create a reimbursement request
+			// This is how every method above should look like. We are verifying before
+			// doing anything else
+//			if (P1_AuthenticateController.verifyUser(ctx)) {
+//				P1_UserController.createRequest(ctx);
+//			} else {
+//				ctx.status(HttpCode.FORBIDDEN);
+//			}
+			
+			if(P1_AuthenticationController.verifyEmployee(ctx)) {
+				P1_Controller.createRequest(ctx);
+			}else {
+				ctx.status(HttpCode.FORBIDDEN);
+			}
+			
+		});
+		
+		app.put("/Manager/ApproveRequest", ctx -> {
+			if(P1_AuthenticationController.verifyEmployee(ctx)) {
+				P1_Controller.approveRequest(ctx);
+			}else {
+				ctx.status(HttpCode.FORBIDDEN);
+			}
+		});
+
+
+
+		app.post("/login", ctx -> {
+			P1_AuthenticationController.authenticateByFormParam(ctx);
+			
+		});
+
+		// This is used to log out
+		app.get("/session/invalidate", ctx-> {
+			ctx.consumeSessionAttribute("user");
+		});
+
+	}
+}
+
+//Methods needed:
+//- submit request for reimbursement
+//- check all pending requests (manager)
+//- check all previous requests (manager and user)
+//- ability to approve or deny requests
