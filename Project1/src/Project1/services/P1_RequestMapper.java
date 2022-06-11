@@ -70,16 +70,8 @@ public class P1_RequestMapper {
 			}
 		
 		});
-
+		//This is used to create a reimbursement request
 		app.post("/CreateRequest", ctx -> {
-			// Create a reimbursement request
-			// This is how every method above should look like. We are verifying before
-			// doing anything else
-//			if (P1_AuthenticateController.verifyUser(ctx)) {
-//				P1_UserController.createRequest(ctx);
-//			} else {
-//				ctx.status(HttpCode.FORBIDDEN);
-//			}
 			
 			if(P1_AuthenticationController.verifyEmployee(ctx)) {
 				P1_Controller.createRequest(ctx);
@@ -88,7 +80,7 @@ public class P1_RequestMapper {
 			}
 			
 		});
-		
+		//This is used by manager to approve requests
 		app.put("/Manager/ApproveRequest", ctx -> {
 			if(P1_AuthenticationController.verifyEmployee(ctx)) {
 				P1_Controller.approveRequest(ctx);
@@ -98,7 +90,7 @@ public class P1_RequestMapper {
 		});
 
 
-
+		//This is used to login
 		app.post("/login", ctx -> {
 			P1_AuthenticationController.authenticateByFormParam(ctx);
 			
