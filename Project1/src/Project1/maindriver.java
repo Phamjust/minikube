@@ -1,3 +1,5 @@
+package Project1;
+
 import Project1.services.P1_RequestMapper;
 import io.javalin.Javalin;
 
@@ -5,19 +7,19 @@ public class maindriver {
 
 	public static void main(String[] args) {
 
-		//Start a javalin server
-        //Over a network, we communicate between 2 machines using their OP (internet protocol) address.
-        //When we have services running on our own machine, we use local host, referring to itself.
+		// Start a javalin serve
+        	// Over a network, we communicate between 2 machines using their OP (interne  protocol) address
+        	//When we have services running on our own machine, we use local host  referring to itself
 
 
-		Javalin app = Javalin.create().start(8501);
+			Javalin app = Javalin.create().start(8501);
 
 		P1_RequestMapper requestMapper = new P1_RequestMapper();
 
 		requestMapper.configureRoutes(app);
 		
 		
-		//Testing
+			// Testing
 //		AuthenticationDao user = new AuthenticationDaoImpl();
 //		user.findEmployeeByUsername("Phamjust");
 	}
