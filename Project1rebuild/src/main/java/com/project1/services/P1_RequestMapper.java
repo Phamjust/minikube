@@ -12,6 +12,10 @@ public class P1_RequestMapper {
 	private P1_AuthenticationController P1_AuthenticationController = new P1_AuthenticationController();
 	
 	public void configureRoutes(Javalin app) {
+		
+		app.get("/hello", ctx -> {
+			ctx.result("hello there");
+		});
 
 		// This will be for employee to view all their approved requests
 		app.get("/Request/approved", ctx -> {
