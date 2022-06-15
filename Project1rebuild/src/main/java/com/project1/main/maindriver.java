@@ -65,7 +65,7 @@ public class maindriver {
 		});
 
 		// custom metric
-		app.get("/login", ctx -> {
+		app.post("/login", ctx -> {
 			System.out.println("I want to keep track of how many people has logged in");
 			total++;
 			counter.increment(1);
