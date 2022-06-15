@@ -5,11 +5,14 @@ import com.project1.user.User;
 
 import io.javalin.Javalin;
 import io.javalin.http.HttpCode;
+import io.micrometer.prometheus.PrometheusConfig;
+import io.micrometer.prometheus.PrometheusMeterRegistry;
 
 public class P1_RequestMapper {
 	private P1_Controller P1_Controller = new P1_Controller();//reference to the next layer
 	private User u = new User();
 	private P1_AuthenticationController P1_AuthenticationController = new P1_AuthenticationController();
+	private PrometheusMeterRegistry pMR = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
 	
 	public void configureRoutes(Javalin app) {
 		
@@ -103,6 +106,10 @@ public class P1_RequestMapper {
 			ctx.consumeSessionAttribute("user");
 		});
 
+//		app.get("/metrics", ctx -> {
+//			ctx.result(pMR.scrape());
+//		});
+				
 	}
 }
 
