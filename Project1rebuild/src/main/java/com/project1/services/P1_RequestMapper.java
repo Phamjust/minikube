@@ -98,9 +98,9 @@ public class P1_RequestMapper {
 		//This is used to login
 		app.post("/login", ctx -> {
 			P1_AuthenticationController.authenticateByFormParam(ctx);
-			System.out.println("I want to keep track of how many people has logged in");
-			total++;
-			counter.increment(1);
+//			System.out.println("I want to keep track of how many people has logged in");
+//			total++;
+//			counter.increment(1);
 		});
 
 		// This is used to log out
