@@ -1,0 +1,19 @@
+services:
+  app:
+    image: phamjust/project1
+    container_name: micrometer-container
+    ports: 
+      - 7400:7400
+  prom:
+    image: 'prom/prometheus'
+    container_name: prom-container
+     #specify the prometheus file in our host machine and move it into the container
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml #this was taken from the prometheus websile (after the :)
+    ports:
+      - 9090:9090
+    #specify the prometheus file in our host machine and move it into the container
+  graf:
+    image: 'grafana/grafana'
+    ports:
+      - 8000:3000 #grafana usally works with port 3000 but our ports are not open to 3000
