@@ -210,9 +210,28 @@ public class RequestDaoImpl implements RequestDao {
 	}
 
 	@Override
-	public List<Request> selectAllApprovedRequestsByEmployee() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Request> selectAllApprovedRequestsByEmployee(User u) {
+		String sql = "Select * from p1_reimbursement where approved = 'true' and user_name=?;";
+		Connection connection = P1_Sqlconnection.getConnection();
+		List<Request> requestList = new ArrayList<>();
+
+		try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+			ps.setString(1, u.getUsername());
+			ResultSet rs = ps.executeQuery(); 
+
+			while (rs.next()) {
+				Request m = new Request(rs.getInt("employee_id"), rs.getString("user_name"),
+						rs.getString("request_type"), rs.getFloat("request_amount"), rs.getBoolean("approved"));
+
+				requestList.add(m);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return requestList;
 	}
 
 	@Override

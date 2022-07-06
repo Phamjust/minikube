@@ -24,7 +24,10 @@ public class P1_Controller {
 
 	// This will be for employee to grab all their approved requests
 	public void getAllRequestsApprovedByEmployee(Context ctx) {
-
+		User employee = P1_AuthenticationController.sessionUser(ctx);
+		List<User> employeeList = requestService.getAllRequestByEmployeeApproved(employee.getUsername());
+		
+		ctx.json(employeeList);
 	}
 
 	// This will be for employee to grab all their requests

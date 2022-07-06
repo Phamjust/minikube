@@ -26,7 +26,7 @@ public interface RequestDao {
 	public List<Request> selectAllRequestsByEmployee(User u);
 
 	// This will grab all Approved records for one employee
-	public List<Request> selectAllApprovedRequestsByEmployee();
+	public List<Request> selectAllApprovedRequestsByEmployee(User u);
 
 	// This will grab all Pending records for one employee
 	public List<Request> selectAllPendingRequestsByEmployee(User u);

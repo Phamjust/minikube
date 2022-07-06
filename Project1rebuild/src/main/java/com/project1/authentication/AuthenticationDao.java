@@ -8,4 +8,6 @@ public interface AuthenticationDao {
 	public String findPasswordExist(String password);
 	
 	public User findEmployeeByUsername(String un);
+	
+	public Boolean verifyManagerStatus(String un);
 }

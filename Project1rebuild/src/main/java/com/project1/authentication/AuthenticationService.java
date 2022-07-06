@@ -12,7 +12,7 @@ public class AuthenticationService {
 		
 		//These check to see if the username and passwords exist
 		if(employee_un.equals("")) return false;
-		if(employee_un.equals("")) return false;
+//		if(employee_un.equals("")) return false;
 		
 		if(employee_un.equals(un) && employee_pw.equals(pw)) {
 			return true;
@@ -26,6 +26,12 @@ public class AuthenticationService {
 		User employee = authenticationdao.findEmployeeByUsername(un);
 		
 		return employee;
+	}
+	
+	public static boolean managerAuthentication(String un) {
+		AuthenticationDao authentication= new AuthenticationDaoImpl();
+		boolean manager = authentication.verifyManagerStatus(un);
+		return manager;
 	}
 }
 	

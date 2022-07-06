@@ -1,15 +1,11 @@
 package com.project1.services;
 
 import java.util.List;
-
 import com.project1.authentication.P1_AuthenticationController;
 import com.project1.dao.RequestDao;
 import com.project1.dao.RequestDaoImpl;
 import com.project1.user.Request;
 import com.project1.user.User;
-
-
-
 
 public class P1_requestService {
 	private static RequestDao rDao = new RequestDaoImpl();
@@ -32,7 +28,7 @@ public class P1_requestService {
 	}
 
 	public List<User> getAllRequestByEmployeePending(String un){
-		List<User>  requestList= rDao.selectEmployee(un);
+		List<User>  requestList= rDao.selectEmployee(un);//grabs the user information
 
 		for(User r: requestList) { //First we are iterating through the employee list
 
@@ -45,7 +41,13 @@ public class P1_requestService {
 		return requestList;
 	}
 
-
+	public List<User> getAllRequestByEmployeeApproved(String un){
+		List<User>  requestList= rDao.selectEmployee(un);
+		for (User r: requestList) {
+			r.setMyRequests(rDao.selectAllApprovedRequestsByEmployee(r));
+		}
+		return requestList;
+	}
 
 
 	public static void createRequest(Request u) {

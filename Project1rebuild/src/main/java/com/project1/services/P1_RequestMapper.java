@@ -17,12 +17,16 @@ public class P1_RequestMapper {
 	public void configureRoutes(Javalin app) {
 		
 		app.get("/hello", ctx -> {
-			ctx.result("hi Dad!");
+			ctx.result("hi Neighbor!");
 		});
 
 		// This will be for employee to view all their approved requests
 		app.get("/Request/approved", ctx -> {
-			P1_Controller.getAllRequestsApprovedByEmployee(ctx);
+			if(P1_AuthenticationController.verifyEmployee(ctx)) {
+				P1_Controller.getAllRequestsApprovedByEmployee(ctx);
+			} else {
+				ctx.status(HttpCode.FORBIDDEN);
+			}
 		});
 
 		// This will be for employee to view all their pending requests
@@ -48,10 +52,11 @@ public class P1_RequestMapper {
 
 		// This will be for managers to view everyones requests
 		app.get("/Manager/Requests", ctx -> {//Done
-			if(P1_AuthenticationController.verifyEmployee(ctx)) {
+			if(P1_AuthenticationController.verifyManager(ctx)) {
 				P1_Controller.getAllRequests(ctx);
 			}else {
 				ctx.status(HttpCode.FORBIDDEN);
+				ctx.result("You must logged in as a manager to access this page");
 			}
 			
 		});

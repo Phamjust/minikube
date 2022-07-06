@@ -105,5 +105,31 @@ public class AuthenticationDaoImpl implements AuthenticationDao {
 		}
 		return u;
 	}
+	
+	@Override
+	public Boolean verifyManagerStatus(String un) {
+		String sqlcommand = "select finance_manager from p1_employee where user_name = ?;";
+		Connection connection = P1_Sqlconnection.getConnection();
+		PreparedStatement stmt;
+		ResultSet rs;
+		Boolean manager = null;
+		try {
+			stmt = connection.prepareStatement(sqlcommand);
+			stmt.setString(1, un);
+			rs = stmt.executeQuery();
+			while (rs.next()) {
+				manager = rs.getBoolean(1);
+			}
+			rs.close();
+			stmt.close();
+			connection.close();
+
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return manager;
+	
+	}
 
 }

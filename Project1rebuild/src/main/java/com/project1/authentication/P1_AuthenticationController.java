@@ -10,7 +10,6 @@ import io.javalin.http.HttpCode;
 public class P1_AuthenticationController {
 
 	public static void authenticateByFormParam(Context ctx) {
-
 		String username = ctx.formParam("username");
 		String password = ctx.formParam("password");
 
@@ -26,7 +25,6 @@ public class P1_AuthenticationController {
 		} else {
 			ctx.result("Access denied");
 			ctx.status(HttpCode.FORBIDDEN);
-//			ctx.sessionAttribute("role", "hacker");
 		}
 
 	}
@@ -50,6 +48,22 @@ public class P1_AuthenticationController {
 			return null;
 		} else {
 			return user;
+		}
+	}
+	public static boolean verifyManager(Context ctx) {
+		//First we check if there is a valid session (ie. the user was able to login)
+		User user = ctx.sessionAttribute("user");
+		
+		if (user == null) {
+			return false;
+		} else {
+			Boolean managerStatus= AuthenticationService.managerAuthentication(user.getUsername());
+			if (managerStatus) {
+				return true;
+			} else {
+				return false;
+			}
+			
 		}
 		
 	}
