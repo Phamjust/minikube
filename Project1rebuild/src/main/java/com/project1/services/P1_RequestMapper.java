@@ -63,7 +63,7 @@ public class P1_RequestMapper {
 
 		// This will be for managers to view everyones pending requests
 		app.get("/Manager/Requests/Pending", ctx -> {//Done
-			if(P1_AuthenticationController.verifyEmployee(ctx)) {
+			if(P1_AuthenticationController.verifyManager(ctx)) {
 				P1_Controller.getAllRequestsPending(ctx);
 			}else {
 				ctx.status(HttpCode.FORBIDDEN);
@@ -73,7 +73,7 @@ public class P1_RequestMapper {
 
 		// This will be for managers to view everyones approved requests
 		app.get("/Manager/Requests/Approved", ctx -> {//Done
-			if(P1_AuthenticationController.verifyEmployee(ctx)) {
+			if(P1_AuthenticationController.verifyManager(ctx)) {
 				P1_Controller.getAllRequestsApproved(ctx);
 			}else {
 				ctx.status(HttpCode.FORBIDDEN);
