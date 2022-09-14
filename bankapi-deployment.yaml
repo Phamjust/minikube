@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: bankapi
+  namespace: default
+  labels:
+    app: bankapi
+spec:
+  selector:
+    matchLabels:
+      app: bankapi
+  replicas: 3
+  minReadySeconds: 5
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: bankapi
+    spec:
+      containers:
+      - name: bankapi-deployment
+        image: phamjust/minikube
+        ports:
+        - containerPort: 7070
+        imagePullPolicy: Never
+        env:
+          - name: db_url
+            value: jdbc:postgresql://minikubedb.ccf5rozyj3jn.us-east-2.rds.amazonaws.com/
+          - name: db_user
+            value: postgres
+          - name: db_pass
+            value: Juspham74$

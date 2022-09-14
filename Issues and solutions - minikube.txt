@@ -1,0 +1,18 @@
+Sevices setup:
+- Prometheus
+	- alertmanager
+	- KSM
+	- Node-exporter
+- Grafana
+- Jenkins (work in progress)
+- persistant volume for each service
+
+Prometheus access: minikube service prom-service
+Grafana access: minikube service grafana-service. Password: echo "Password: $(kubectl get secret grafana-admin --namespace default -o jsonpath="{.data.GF_SECURITY_ADMIN_PASSWORD}" | base64 --decode)"
+Jenkins access: minkube service jenkins. Password: printf $(kubectl get secret --namespace jenkins-pipeline jenkins -o jsonpath="{.data.jenkins-admin-password}" | base64 --decode);echo
+
+Things to work on:
+- Figure out how to run jenkins pipeline without github
+- Work more on grafana dashboard, work with SLO and alert manager
+
+
