@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	environment{
-		registry='revnkog/project2'
+		registry='phamjust/minikube'
         dockerImage=''
         dockerHubCredentials='DockerHub'
 	}
@@ -42,4 +42,4 @@ pipeline {
 			}
 		}
 	}
-}
+}// My name is Justin
